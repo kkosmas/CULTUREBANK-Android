@@ -1,11 +1,11 @@
 plugins { id 'com.android.application' }
 
 android {
-    namespace 'gr.culturebank.webapp'
+    namespace 'gr.culturebank.direct'
     compileSdk 35
 
     defaultConfig {
-        applicationId 'gr.culturebank.webapp'
+        applicationId 'gr.culturebank.direct'
         minSdk 24
         targetSdk 35
         versionCode 1
@@ -13,7 +13,9 @@ android {
     }
 
     buildTypes {
-        release { minifyEnabled false }
+        release {
+            minifyEnabled false
+        }
     }
 
     compileOptions {
