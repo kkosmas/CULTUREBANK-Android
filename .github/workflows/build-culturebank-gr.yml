@@ -1,0 +1,51 @@
+name: Build CULTUREBANK.GR Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "simpleapp/**"
+      - ".github/workflows/build-culturebank-gr.yml"
+      - "settings.gradle"
+      - "build.gradle"
+      - "gradle.properties"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-culturebank-gr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Android SDK 35
+        shell: bash
+        run: |
+          SDKMANAGER="$(find /usr/local/lib/android/sdk/cmdline-tools -type f -name sdkmanager | head -n 1)"
+          echo "Using $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+
+      - name: Build CULTUREBANK.GR debug APK
+        run: gradle --no-daemon :simpleapp:assembleDebug
+
+      - name: Rename APK
+        run: cp simpleapp/build/outputs/apk/debug/simpleapp-debug.apk CULTUREBANK-GR-v1.0.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CULTUREBANK-GR-v1.0-apk
+          path: CULTUREBANK-GR-v1.0.apk
+          retention-days: 30
