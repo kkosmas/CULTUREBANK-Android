@@ -7,7 +7,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -88,11 +87,7 @@ public class MainActivity extends Activity {
         portal.setPadding(dp(22), dp(34), dp(22), dp(30));
         scroll.addView(portal, new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        ImageView logo = new ImageView(this);
-        logo.setAdjustViewBounds(true);
-        logo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        byte[] cb = EmbeddedAssets.cultureBankLogo();
-        logo.setImageBitmap(BitmapFactory.decodeByteArray(cb,0,cb.length));
+        CultureBankLogoView logo = new CultureBankLogoView(this);
         LinearLayout.LayoutParams lpLogo = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(270));
         lpLogo.setMargins(0,0,0,dp(12));
         portal.addView(logo, lpLogo);
@@ -122,11 +117,7 @@ public class MainActivity extends Activity {
         rp.setMargins(dp(4),dp(18),dp(4),0);
         portal.addView(record, rp);
 
-        ImageView recordLogo = new ImageView(this);
-        recordLogo.setAdjustViewBounds(true);
-        recordLogo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        byte[] rb = EmbeddedAssets.recordLogo();
-        recordLogo.setImageBitmap(BitmapFactory.decodeByteArray(rb,0,rb.length));
+        RecordLogoView recordLogo = new RecordLogoView(this);
         record.addView(recordLogo, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(190)));
 
         TextView privateLabel = text("ONE WORLD, ONE CANVAS · PRIVATE RECORD PROJECT", 11, Color.rgb(241,207,119), true);
